@@ -32,6 +32,11 @@ void MX_SDIO_SD_Init(void)
 {
 
   /* USER CODE BEGIN SDIO_Init 0 */
+	if(HAL_GPIO_ReadPin(TF_CD_GPIO_Port,TF_CD_Pin) == 1)
+	{
+		return;
+	}
+
 
   /* USER CODE END SDIO_Init 0 */
 
