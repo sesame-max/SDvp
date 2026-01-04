@@ -35,13 +35,13 @@ extern "C" {
 extern UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN Private defines */
-
+#define TX_BUF_LEN 1024
 /* USER CODE END Private defines */
 
 void MX_USART2_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+void MyPrintf(const char *__format, ...);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

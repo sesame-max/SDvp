@@ -34,6 +34,23 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
+// 定义音符频率
+#define NOTE_C4  262
+#define NOTE_D4  294
+#define NOTE_E4  330
+#define NOTE_F4  349
+#define NOTE_G4  392
+#define NOTE_A4  440
+#define NOTE_B4  494
+ 
+// 《小星星》乐谱
+int melody[] = {
+  NOTE_C4, NOTE_C4, NOTE_G4, NOTE_G4,
+  NOTE_A4, NOTE_A4, NOTE_G4, 0,
+  NOTE_F4, NOTE_F4, NOTE_E4, NOTE_E4,
+  NOTE_D4, NOTE_D4, NOTE_C4
+};
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -111,11 +128,18 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    for(uint16_t i = 20;i < 20000;i+=10)
+    for(uint16_t i = 0;i < (sizeof(melody) / sizeof(melody[0]));i++)
     {
-      set_buzzer_frequency(i);
-      HAL_Delay(20);
+      if(melody[i] != 0)
+      {
+        HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_1);
+        set_buzzer_frequency(melody[i]);
+      }
+      HAL_Delay(450);
+      HAL_TIM_PWM_Stop(&htim2,TIM_CHANNEL_1);
+      HAL_Delay(50);
     }
+    HAL_Delay(1500);
 //     for(uint16_t i = 0;i < 4999;i+=100)
 //     {
 // //      __HAL_TIM_SetCompare(&htim3,TIM_CHANNEL_1,i);

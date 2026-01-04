@@ -1,7 +1,7 @@
 Protel Design System Design Rule Check
-PCB File : D:\Warehouse\Projects\SDvp\sdvp\SDvp_Hardware\SDvp.PcbDoc
-Date     : 2025/12/18
-Time     : 22:47:21
+PCB File : E:\Projects\SDvp\SDvp_Hardware\SDvp.PcbDoc
+Date     : 2025/12/30
+Time     : 23:24:27
 
 Processing Rule : Clearance Constraint (Gap=6mil) (All),(All)
 Rule Violations :0
@@ -45,4 +45,4 @@ Rule Violations :0
 
 Violations Detected : 0
 Waived Violations : 0
-Time Elapsed        : 00:00:02
+Time Elapsed        : 00:00:01

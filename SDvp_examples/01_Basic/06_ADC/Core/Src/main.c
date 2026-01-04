@@ -46,7 +46,10 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint16_t adc_val = 0;
+uint16_t adc_val[3] = {0};
+float temp = 0;
+float voltage[3] = {0};
+float r = 0;
 
 /* USER CODE END PV */
 
@@ -96,6 +99,8 @@ int main(void)
   MX_TIM2_Init();
   MX_USART2_UART_Init();
   MX_ADC1_Init();
+  MX_ADC2_Init();
+  MX_ADC3_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -107,9 +112,24 @@ int main(void)
     HAL_ADC_Start(&hadc1);
     HAL_ADC_PollForConversion(&hadc1,0xffffff);    
     if(HAL_IS_BIT_SET(HAL_ADC_GetState(&hadc1),HAL_ADC_STATE_REG_EOC)){
-      adc_val = HAL_ADC_GetValue(&hadc1);
+      adc_val[0] = HAL_ADC_GetValue(&hadc1);
     }
-    HAL_UART_Transmit(&huart2,(uint8_t *)&adc_val,2,0xffff);
+    HAL_ADC_Start(&hadc2);
+    HAL_ADC_PollForConversion(&hadc2,0xffffff);    
+    if(HAL_IS_BIT_SET(HAL_ADC_GetState(&hadc2),HAL_ADC_STATE_REG_EOC)){
+      adc_val[1] = HAL_ADC_GetValue(&hadc2);
+    }
+    HAL_ADC_Start(&hadc3);
+    HAL_ADC_PollForConversion(&hadc3,0xffffff);    
+    if(HAL_IS_BIT_SET(HAL_ADC_GetState(&hadc3),HAL_ADC_STATE_REG_EOC)){
+      adc_val[2] = HAL_ADC_GetValue(&hadc3);
+    }
+    for(uint8_t i = 0;i<3;i++)
+    {
+      voltage[i] = (adc_val[i] * 3.3) / 4096.0;
+    }
+    r = (100.0 * voltage[1]) / (3.3 -voltage[1]);
+    MyPrintf("%f,%f,%f\r\n",voltage[0],r,voltage[2]);
     HAL_Delay(200);
     /* USER CODE END WHILE */
 

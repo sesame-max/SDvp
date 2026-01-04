@@ -21,7 +21,9 @@
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
-
+#include "stdarg.h"
+#include "string.h"
+#include "stdio.h"
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart2;
@@ -118,5 +120,18 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 }
 
 /* USER CODE BEGIN 1 */
+uint8_t TxBuf[TX_BUF_LEN];
+void MyPrintf(const char *__format, ...)
+{
+  va_list ap;
+  va_start(ap, __format);
 
+  memset(TxBuf, 0x0, TX_BUF_LEN);
+
+  vsnprintf((char *)TxBuf, TX_BUF_LEN, (const char *)__format, ap);
+  va_end(ap);
+  int len = strlen((const char *)TxBuf);
+
+  HAL_UART_Transmit(&huart2, (uint8_t *)&TxBuf, len, 0xFFFF);
+}
 /* USER CODE END 1 */
