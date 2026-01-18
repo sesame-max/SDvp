@@ -83,3 +83,6 @@ JLinkLog.txt
 /Hardware/__Previews
 VRX.uvgui*
 __Previews
+
+#keep 
+!CMSIS_DAP.hex
